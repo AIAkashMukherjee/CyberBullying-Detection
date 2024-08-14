@@ -21,22 +21,6 @@ except Exception as e:
     loaded_model = None
     loaded_preprocessor = None
 
-# def parse_input(input_str):
-#     # Assumes the fields are separated by specific patterns
-#     parts = input_str.split(' ')
-#     # Assuming the format is fixed and you need to handle specific indexes
-#     if len(parts) < 6:
-#         return None, "Error: Not enough fields in input."
-    
-#     comment = ' '.join(parts[:len(parts)-5])
-#     Race = parts[len(parts)-5]
-#     Religion = parts[len(parts)-4]
-#     Gender = parts[len(parts)-3]
-#     Sexual_Orientation = parts[len(parts)-2]
-#     Miscellaneous = parts[len(parts)-1]
-
-#     return (comment, Race, Religion, Gender, Sexual_Orientation, Miscellaneous), None
-
 def predictions(comment):
     if loaded_model is None:
         return "Model not loaded"
