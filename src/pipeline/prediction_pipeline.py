@@ -1,62 +1,52 @@
-# Create prediction pipeline class -> completed
-# create function for load a object -> completed
-# Create custome class basd upon our dataset -> completed
-# Create function to convert data into Dataframe with the help of Dict
-
-import os,sys
+import os
+import sys
+import pandas as pd
 from src.logger.custom_logging import logger
 from src.exceptions.expection import CustomException
-from src.components.data_transformation import DataTransformation
-from src.components.model_trainer import ModelTrainer
-from dataclasses import dataclass
-from src.components.data_ingestion import DataIngestion
 from src.utlis.utlis import load_obj
-import pandas as pd
+import numpy as np
 
-
-class PredicitonPipeline:
+class PredictionPipeline:
     def __init__(self) -> None:
         pass
 
-    def predict(self,features):
-        preprocessor_obj_path=os.path.join("artifacts/data_transformation", "preprocessor.pkl")
-
-        model_path=os.path.join("artifacts/model_trainer", "model.pkl")
-        
-        processor=load_obj(preprocessor_obj_path)
-        model=load_obj(model_path)
-
-        scaled=processor.transform(features)
-        pred=model.predict(scaled)
-
-        return pred
-    
-
-class CustomClass:
-    def __init__(self,comment,	Race,	Religion,	Gender,	Sexual_Orientation,	Miscellaneous):
-    
-        self.comment =comment
-        self.Race=Race
-        self.Religion=Religion
-        self.Gender=Gender
-        self.Sexual_Orientation=Sexual_Orientation
-        self.Misc=Miscellaneous
-        
-
-
-    def get_data_DataFrame(self):
+    def predict(self, features):
+        """
+        Load the preprocessor and model, then make predictions on the provided features.
+        """
         try:
-            custom_input= {
-                'comment':[self.comment],
-                'Race':[self.Race],
-                'Religion':[self.Religion],
-                'Gender':[self.Gender],
-                'Sexual_Orien':[self.Sexual_Orientation],
-                'Misc':[self.Misc]
-            }
-            data=pd.DataFrame(custom_input)
-            return data
+            # Paths to the preprocessor and model
+            preprocessor_obj_path = os.path.join("artifacts/data_transformation", "preprocessor.pkl")
+            model_path = os.path.join("artifacts/model_trainer", "model.pkl")
+
+            # Load preprocessor and model
+            processor = load_obj(preprocessor_obj_path)
+            model = load_obj(model_path)
+
+            # Transform features and make predictions
+            scaled = processor.transform(features)
+            pred = model.predict(scaled)
+
+            # Debugging output
+            logger.info(f"Raw Prediction Result: {pred}")
+
+            # Handle prediction result
+            if isinstance(pred, (np.ndarray, list)):
+                pred = np.array(pred).flatten()  # Flatten if it's a 2D array or list
+            if len(pred) == 1:
+                pred = pred[0]  # Extract single value if prediction is an array with one element
+
+            # Convert result to appropriate format (e.g., string or categorical)
+            if isinstance(pred, float):
+                # Assuming a binary classification, map the result to 'hate' or 'normal'
+                result = 'hate' if pred > 0.5 else 'normal'
+            else:
+                result = pred
+
+            logger.info(f"Processed Prediction Result: {result}")
+
+            return result
+
         except Exception as e:
-            raise CustomException(e,sys)    
-
-
+            logger.error(f"Error in prediction: {e}")
+            raise CustomException(e, sys)

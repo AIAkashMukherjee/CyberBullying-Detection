@@ -48,6 +48,18 @@ class DataTransformation:
         df['text'] = df['comment'] + ' ' + df['Features']
         return df
     
+    def map_labels(self, df):
+        """
+        Map the 'label' column values to the desired format.
+        """
+        label_mapping = {
+           "normal": "normal",
+            "hatespeech": "hate",
+            "offensive": "hate"
+        }
+        df['label'] = df['label'].replace(label_mapping)
+        return df
+
     def apply_preprocessing(self, df):
         """
         Apply text preprocessing to the 'text' column.
@@ -89,7 +101,11 @@ class DataTransformation:
             test_df = self.combine_features(test_df)
             test_df = self.apply_preprocessing(test_df)
 
-            logger.info('Applied Preprocess function')
+            # Map labels
+            train_df = self.map_labels(train_df)
+            test_df = self.map_labels(test_df)
+
+            logger.info('Applied preprocessing function and label mapping')
 
             # Get text transformation pipeline
             text_pipeline = self.get_text_pipeline()
@@ -98,14 +114,14 @@ class DataTransformation:
             X_train = text_pipeline.fit_transform(train_df['text'])
             X_test = text_pipeline.transform(test_df['text'])
 
-            logger.info('Transformed X_train and X test')
+            logger.info('Transformed X_train and X_test')
 
             # Encode labels
             label_encoder = LabelEncoder()
             train_labels = label_encoder.fit_transform(train_df['label'])
             test_labels = label_encoder.transform(test_df['label'])
 
-            logger.info('Transformed train label and test label')
+            logger.info('Transformed train and test labels')
 
             # Combine features and labels
             train_array = np.c_[X_train.toarray(), train_labels]

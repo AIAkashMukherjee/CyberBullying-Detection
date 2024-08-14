@@ -1,0 +1,8 @@
+[ 2024-08-14 13:45:37,099 ] 31 src.logger.custom_logging - INFO - Raw Prediction Result: [0.]
+[ 2024-08-14 13:45:37,099 ] 39 src.logger.custom_logging - INFO - Processed Prediction Result: 0.0
+[ 2024-08-14 13:46:25,856 ] 31 src.logger.custom_logging - INFO - Raw Prediction Result: [0.]
+[ 2024-08-14 13:46:25,857 ] 39 src.logger.custom_logging - INFO - Processed Prediction Result: 0.0
+[ 2024-08-14 13:47:19,204 ] 31 src.logger.custom_logging - INFO - Raw Prediction Result: [0.]
+[ 2024-08-14 13:47:19,204 ] 46 src.logger.custom_logging - INFO - Processed Prediction Result: normal
+[ 2024-08-14 13:49:55,133 ] 31 src.logger.custom_logging - INFO - Raw Prediction Result: [0.]
+[ 2024-08-14 13:49:55,134 ] 46 src.logger.custom_logging - INFO - Processed Prediction Result: normal

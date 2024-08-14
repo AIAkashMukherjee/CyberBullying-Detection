@@ -17,18 +17,11 @@ def save_obj(file_path,obj):
         logger.info(f'Error ocuured in {e}')
         raise CustomException(e,sys)
     
-def model_evaluate(X_train, y_train, X_test, y_test, models, params):
+def model_evaluate(X_train, y_train, X_test, y_test, models):
     try:
         report = {}
         for model_name, model in models.items():
-            param = params.get(model_name, {})
 
-            # Perform Randomized Search for hyperparameter tuning
-            gs = RandomizedSearchCV(model, param, cv=5, n_iter=10, scoring='accuracy', verbose=1, random_state=42)
-            gs.fit(X_train, y_train)
-
-            # Set the best parameters and fit the model
-            model.set_params(**gs.best_params_)
             model.fit(X_train, y_train)
 
             # Make predictions

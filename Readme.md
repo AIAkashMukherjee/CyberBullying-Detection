@@ -1,6 +1,5 @@
 # CyberBullying Detection
 
-
 ## About Dataset
 
 This dataset contains annotated social media comments specifically curated for the analysis and detection of cyberbullying. The data is labeled across multiple categories including race, religion, gender, sexual orientation, and miscellaneous attributes. Each comment has been carefully reviewed and annotated by multiple annotators to ensure accuracy and reliability.
@@ -74,4 +73,4 @@ pages={14867--14875},
 year={2021}
 }
 
-#### Model used Random Forest, accuracy Score: 71 %
+#### Model used Random Forest, accuracy Score: 86 %

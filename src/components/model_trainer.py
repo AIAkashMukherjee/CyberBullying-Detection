@@ -26,17 +26,9 @@ class ModelTrainer:
                
             }
 
-            params = {
-                "Random Forest":{
-                    "class_weight":["balanced"],
-                    'n_estimators': [100,200,400],
-                    'max_depth': [10,20,30],
-                    'min_samples_split': [2, 5, 10],
-                }
-               
-            }
+   
             logger.info('Going to Evaluate model')
-            model_report:dict=model_evaluate(X_train,y_train,X_test,y_test,model,params)
+            model_report:dict=model_evaluate(X_train,y_train,X_test,y_test,model)
             logger.info('Model evalution completed')
             print(model_report)
             print('\n====================================================================================\n')
