@@ -11,7 +11,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 class DataIngestion:
     def __init__(self) -> None:
-        self.data_ingestion_config=DataIngestionConfig
+        self.data_ingestion_config=DataIngestionConfig()
 
     def initate_data_ingestion(self):
         try:
